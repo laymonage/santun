@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.MainFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 
 class MainFragment : Fragment() {
@@ -20,7 +22,13 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        val binding: MainFragmentBinding = DataBindingUtil.inflate(
+                inflater, R.layout.main_fragment, container, false
+        )
+        val view: View = binding.root
+        binding.name = "Sage Muhammad"
+        binding.lastName = "Abdullah"
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
