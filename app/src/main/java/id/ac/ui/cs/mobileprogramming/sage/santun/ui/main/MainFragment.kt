@@ -25,15 +25,13 @@ class MainFragment : Fragment() {
         val binding: MainFragmentBinding = DataBindingUtil.inflate(
                 inflater, R.layout.main_fragment, container, false
         )
-        val view: View = binding.root
-        binding.name = "Sage Muhammad"
-        binding.lastName = "Abdullah"
-        return view
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        binding.viewModel = viewModel
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
