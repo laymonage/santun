@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Santun</string>
+    <string name="detail_button">Details</string>
 </resources>
