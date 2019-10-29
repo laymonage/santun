@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Santun</string>
     <string name="detail_button">Details</string>
+    <string name="from">FROM</string>
+    <string name="from_hint">Insert sender name…</string>
+    <string name="to">TO</string>
+    <string name="to_hint">Insert receiver name…</string>
+    <string name="message">MESSAGE</string>
+    <string name="message_hint">Write your message here…</string>
+    <string name="image">IMAGE</string>
+    <string name="image_button">Insert</string>
 </resources>
