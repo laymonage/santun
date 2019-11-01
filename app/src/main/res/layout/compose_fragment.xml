@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="id.ac.ui.cs.mobileprogramming.sage.santun.ui.compose.ComposeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,6 +38,7 @@
             android:ems="10"
             android:hint="@string/from_hint"
             android:inputType="textPersonName"
+            android:text="@={viewModel.from}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fromText" />
@@ -63,6 +66,7 @@
             android:ems="10"
             android:hint="@string/to_hint"
             android:inputType="textPersonName"
+            android:text="@={viewModel.to}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toText" />
@@ -91,6 +95,7 @@
             android:hint="@string/message_hint"
             android:inputType="textPersonName"
             android:singleLine="false"
+            android:text="@={viewModel.message}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/messageText" />
