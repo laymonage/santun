@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ComposeViewModel : ViewModel() {
-    val from = MutableLiveData<String>()
-    val to = MutableLiveData<String>()
+    val sender = MutableLiveData<String>()
+    val receiver = MutableLiveData<String>()
     val message = MutableLiveData<String>()
 }
