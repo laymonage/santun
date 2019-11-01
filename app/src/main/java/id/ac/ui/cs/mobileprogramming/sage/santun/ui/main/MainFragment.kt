@@ -1,5 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.sage.santun.ui.main
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.MainFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
+import id.ac.ui.cs.mobileprogramming.sage.santun.ComposeActivity
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MainFragment : Fragment() {
@@ -38,6 +40,10 @@ class MainFragment : Fragment() {
                 .replace(R.id.container, DetailFragment.newInstance())
                 .addToBackStack(null)
                 .commit()
+        }
+        view.compose_button.setOnClickListener {
+            val intent = Intent(this.context, ComposeActivity::class.java)
+            startActivity(intent)
         }
     }
 

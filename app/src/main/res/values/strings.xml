@@ -9,4 +9,5 @@
     <string name="message_hint">Write your message here…</string>
     <string name="image">IMAGE</string>
     <string name="image_button">Insert</string>
+    <string name="compose_button">Compose</string>
 </resources>
