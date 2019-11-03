@@ -14,6 +14,7 @@ class ComposeViewModel : ViewModel() {
     }
 
     fun messageIsValid(): Boolean {
-        return sender.value != null && receiver.value != null && message.value != null
+        return !sender.value.isNullOrBlank() && !receiver.value.isNullOrBlank()
+                && !message.value.isNullOrBlank()
     }
 }
