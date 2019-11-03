@@ -27,7 +27,8 @@
             android:layout_marginTop="16dp"
             android:text="@string/sender_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/input_label" />
 
         <EditText
             android:id="@+id/senderInput"
@@ -55,7 +56,8 @@
             android:layout_marginTop="16dp"
             android:text="@string/receiver_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/senderInput" />
+            app:layout_constraintTop_toBottomOf="@+id/senderInput"
+            style="@style/input_label" />
 
         <EditText
             android:id="@+id/receiverInput"
@@ -83,7 +85,8 @@
             android:layout_marginTop="16dp"
             android:text="@string/message_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/receiverInput" />
+            app:layout_constraintTop_toBottomOf="@+id/receiverInput"
+            style="@style/input_label" />
 
         <EditText
             android:id="@+id/messageInput"
@@ -112,7 +115,8 @@
             android:layout_marginTop="16dp"
             android:text="@string/image_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/messageInput" />
+            app:layout_constraintTop_toBottomOf="@+id/messageInput"
+            style="@style/input_label" />
 
         <Button
             android:id="@+id/button2"
