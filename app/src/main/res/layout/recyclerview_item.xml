@@ -16,23 +16,32 @@
 
         <TextView
             android:id="@+id/senderLabelCard"
+            style="@style/card_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/sender_label_card"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/card_label" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/senderText"
+            style="@style/card_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:maxLines="1"
+            app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/senderLabelCard"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/card_content" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/receiverLabelCard"
@@ -48,14 +57,20 @@
 
         <TextView
             android:id="@+id/receiverText"
+            style="@style/card_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:maxLines="1"
+            app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/receiverLabelCard"
-            app:layout_constraintTop_toBottomOf="@+id/senderText"
-            style="@style/card_content" />
+            app:layout_constraintTop_toBottomOf="@+id/senderText" />
 
         <TextView
             android:id="@+id/messageLabelCard"
@@ -67,7 +82,7 @@
             android:text="@string/message_label_card"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/receiverLabelCard"
-            style="@style/card_label"  />
+            style="@style/card_label" />
 
         <TextView
             android:id="@+id/messageText"
@@ -80,11 +95,13 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:maxLines="2"
-            android:textColor="@android:color/black"
+            app:layout_constrainedWidth="true"
+            app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/messageLabelCard" />
+            app:layout_constraintTop_toBottomOf="@+id/messageLabelCard"
+            style="@style/card_content" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

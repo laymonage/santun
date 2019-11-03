@@ -27,7 +27,7 @@ class DetailFragment : Fragment() {
         val binding: DetailFragmentBinding = DataBindingUtil.inflate(
             inflater, R.layout.detail_fragment, container, false
         )
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(activity!!).get(MainViewModel::class.java)
         binding.viewModel = viewModel
         return binding.root
     }

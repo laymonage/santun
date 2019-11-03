@@ -1,13 +1,11 @@
 package id.ac.ui.cs.mobileprogramming.sage.santun.ui.main
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,14 +14,24 @@ import androidx.recyclerview.widget.RecyclerView
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.MainFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.ComposeActivity
+import id.ac.ui.cs.mobileprogramming.sage.santun.model.Message
 import id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel
-import id.ac.ui.cs.mobileprogramming.sage.santun.ui.compose.ComposeViewModel
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MainFragment : Fragment() {
 
     companion object {
         fun newInstance() = MainFragment()
+    }
+
+    private val onItemClickListener = object : OnItemClickListener {
+        override fun onItemClicked(message: Message) {
+            viewModel.message.value = message
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.container, DetailFragment.newInstance())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private lateinit var viewModel: MainViewModel
@@ -36,7 +44,7 @@ class MainFragment : Fragment() {
         val binding: MainFragmentBinding = DataBindingUtil.inflate(
             inflater, R.layout.main_fragment, container, false
         )
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(activity!!).get(MainViewModel::class.java)
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         binding.viewModel = viewModel
         binding.composeViewModel = messageViewModel
@@ -47,7 +55,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = MessageListAdapter(context!!)
+        val adapter = MessageListAdapter(onItemClickListener)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context!!)
 
