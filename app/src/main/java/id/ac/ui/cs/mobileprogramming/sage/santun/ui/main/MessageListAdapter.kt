@@ -16,7 +16,9 @@ class MessageListAdapter internal constructor(context: Context) :
     private var messages = emptyList<Message>()
 
     inner class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val messageItemView: TextView = itemView.findViewById(R.id.itemText)
+        val senderView: TextView = itemView.findViewById(R.id.senderText)
+        val receiverView: TextView = itemView.findViewById(R.id.receiverText)
+        val messageView: TextView = itemView.findViewById(R.id.messageText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
@@ -26,7 +28,9 @@ class MessageListAdapter internal constructor(context: Context) :
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val current = messages[position]
-        holder.messageItemView.text = current.message
+        holder.senderView.text = current.sender
+        holder.receiverView.text = current.receiver
+        holder.messageView.text = current.message
     }
 
     internal fun setMessages(messages: List<Message>) {

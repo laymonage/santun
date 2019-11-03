@@ -10,5 +10,8 @@
     <string name="image_label">IMAGE</string>
     <string name="image_button">Insert</string>
     <string name="compose_button">Compose</string>
-    <string name="empty_message">Message cannot be empty.</string>
+    <string name="empty_message">Please fill all the fields.</string>
+    <string name="sender_label_card">From:</string>
+    <string name="receiver_label_card">To:</string>
+    <string name="message_label_card">Message:</string>
 </resources>
