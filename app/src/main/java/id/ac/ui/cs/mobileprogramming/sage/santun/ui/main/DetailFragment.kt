@@ -1,12 +1,12 @@
 package id.ac.ui.cs.mobileprogramming.sage.santun.ui.main
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.DetailFragmentBinding
@@ -27,7 +27,7 @@ class DetailFragment : Fragment() {
         val binding: DetailFragmentBinding = DataBindingUtil.inflate(
             inflater, R.layout.detail_fragment, container, false
         )
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding.viewModel = viewModel
         return binding.root
     }

@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="id.ac.ui.cs.mobileprogramming.sage.santun.ui.main.MainViewModel"/>
+        <variable
+            name="composeViewModel"
+            type="id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fab_main_compose"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/ic_add_24dp"

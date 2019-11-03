@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="id.ac.ui.cs.mobileprogramming.sage.santun.ui.compose.ComposeViewModel" />
+        <variable
+            name="messageViewModel"
+            type="id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +58,7 @@
             app:layout_constraintTop_toBottomOf="@+id/senderInput" />
 
         <EditText
-            android:id="@+id/toInput"
+            android:id="@+id/receiverInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -80,7 +83,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/message_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toInput" />
+            app:layout_constraintTop_toBottomOf="@+id/receiverInput" />
 
         <EditText
             android:id="@+id/messageInput"
@@ -121,6 +124,15 @@
             android:text="@string/image_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageLabel" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_compose_send"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_check_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
