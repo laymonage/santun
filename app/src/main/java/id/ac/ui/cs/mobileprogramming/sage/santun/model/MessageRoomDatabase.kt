@@ -29,6 +29,14 @@ abstract class MessageRoomDatabase : RoomDatabase() {
             messageDao.insert(message)
             message = Message(null, "kamu", "aku", "world")
             messageDao.insert(message)
+            message = Message(
+                null, "seseorang yang namanya panjang sekali banget banget pokoknya lah " +
+                "gitu pokoknya gan",
+                "ini juga namanya panjang banget pokoknya mungkin dia mau ngerusak app ini " +
+                "gitu pokoknya gan",
+                "pesan\nini terdiri\ndari lebih dari\ntiga baris kata-kata\nkita lihat saja"
+            )
+            messageDao.insert(message)
         }
     }
 
