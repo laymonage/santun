@@ -4,17 +4,39 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Database(entities = [Message::class], version = 1)
 abstract class MessageRoomDatabase : RoomDatabase() {
 
     abstract fun messageDao(): MessageDao
 
+    private class MessageDatabaseCallback(private val scope: CoroutineScope) :
+        RoomDatabase.Callback() {
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            INSTANCE?.let {
+                    database -> scope.launch {
+                populateDatabase(database.messageDao())
+            }
+            }
+        }
+        suspend fun populateDatabase(messageDao: MessageDao) {
+            messageDao.deleteAll()
+            var message = Message(null, "aku", "kamu", "halo")
+            messageDao.insert(message)
+            message = Message(null, "kamu", "aku", "world")
+            messageDao.insert(message)
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: MessageRoomDatabase? = null
 
-        fun getDatabase(context: Context): MessageRoomDatabase {
+        fun getDatabase(context: Context, scope: CoroutineScope): MessageRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -24,7 +46,9 @@ abstract class MessageRoomDatabase : RoomDatabase() {
                     context.applicationContext,
                     MessageRoomDatabase::class.java,
                     "message_database"
-                ).build()
+                )
+                    .addCallback(MessageDatabaseCallback(scope))
+                    .build()
                 INSTANCE = instance
                 return instance
             }
