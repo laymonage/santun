@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Santun</string>
+    <string name="compose_button">Tulis Pesan</string>
+    <string name="detail_button">Detail</string>
+    <string name="empty_message">Mohon isi semua kolom.</string>
+    <string name="image_button">Sisipkan</string>
+    <string name="image_label">GAMBAR</string>
+    <string name="message_hint">Tuliskan pesan Anda di sini…</string>
+    <string name="message_label">PESAN</string>
+    <string name="message_label_card">Pesan:</string>
+    <string name="receiver_hint">Masukkan nama penerima…</string>
+    <string name="receiver_label">UNTUK</string>
+    <string name="receiver_label_card">Untuk:</string>
+    <string name="sender_hint">Masukkan nama pengirim…</string>
+    <string name="sender_label">DARI</string>
+    <string name="sender_label_card">Dari:</string>
+</resources>
