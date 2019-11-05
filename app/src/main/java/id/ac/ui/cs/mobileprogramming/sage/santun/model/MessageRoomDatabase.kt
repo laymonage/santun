@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import id.ac.ui.cs.mobileprogramming.sage.santun.model.migrations.MESSAGE_MIGRATION_1_2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Message::class], version = 1)
+@Database(entities = [Message::class], version = 2)
 abstract class MessageRoomDatabase : RoomDatabase() {
 
     abstract fun messageDao(): MessageDao
@@ -56,6 +57,7 @@ abstract class MessageRoomDatabase : RoomDatabase() {
                     "message_database"
                 )
                     .addCallback(MessageDatabaseCallback(scope))
+                    .addMigrations(MESSAGE_MIGRATION_1_2)
                     .build()
                 INSTANCE = instance
                 return instance
