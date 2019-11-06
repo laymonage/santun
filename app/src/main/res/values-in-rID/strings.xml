@@ -15,4 +15,5 @@
     <string name="sender_hint">Masukkan nama pengirim…</string>
     <string name="sender_label">DARI</string>
     <string name="sender_label_card">Dari:</string>
+    <string name="no_connection_message">Koneksi internet terputus. Daftar pesan tidak akan diperbarui.</string>
 </resources>
