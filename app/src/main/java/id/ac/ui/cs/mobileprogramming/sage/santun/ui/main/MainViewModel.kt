@@ -12,6 +12,7 @@ import id.ac.ui.cs.mobileprogramming.sage.santun.util.data.toJson
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.requestFilePath
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.writeStringToFile
 import kotlinx.coroutines.launch
+import org.joda.time.format.DateTimeFormat
 
 class MainViewModel : ViewModel() {
     val message = MutableLiveData<Message>()
@@ -34,5 +35,9 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             writeStringToFile(activity, toJson(message.value!!), data.data!!)
         }
+    }
+
+    fun getFormattedTimestamp(): String {
+        return DateTimeFormat.mediumDateTime().print(message.value!!.timestamp)
     }
 }

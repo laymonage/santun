@@ -8,3 +8,9 @@ val MESSAGE_MIGRATION_1_2: Migration = object : Migration(1, 2) {
         database.execSQL("ALTER TABLE message_table ADD COLUMN image_uri TEXT")
     }
 }
+
+val MESSAGE_MIGRATION_2_3: Migration = object : Migration(2, 3) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE message_table ADD COLUMN timestamp INTEGER NOT NULL")
+    }
+}
