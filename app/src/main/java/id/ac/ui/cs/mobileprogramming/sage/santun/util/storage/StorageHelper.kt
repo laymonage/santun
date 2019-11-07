@@ -13,7 +13,7 @@ import java.io.File
 const val CREATE_REQUEST_CODE = 42
 
 @RequiresApi(Build.VERSION_CODES.KITKAT)
-fun requestFilePath(fragment: Fragment, mimeType: String, fileName: String) {
+fun createDocument(fragment: Fragment, mimeType: String, fileName: String) {
     val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
         addCategory(Intent.CATEGORY_OPENABLE)
         type = mimeType

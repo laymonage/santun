@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import id.ac.ui.cs.mobileprogramming.sage.santun.model.Message
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.data.toJson
-import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.requestFilePath
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.createDocument
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.writeStringToFile
 import kotlinx.coroutines.launch
 import org.joda.time.format.DateTimeFormat
@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
         val message = message.value!!
         val fileName = "${message.id.toString()}.json"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            requestFilePath(
+            createDocument(
                 fragment, "application/json", fileName
             )
         } else {
