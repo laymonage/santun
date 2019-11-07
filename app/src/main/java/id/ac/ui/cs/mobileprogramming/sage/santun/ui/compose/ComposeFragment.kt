@@ -7,15 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.ComposeFragmentBinding
+import id.ac.ui.cs.mobileprogramming.sage.santun.model.Message
 import id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.GET_REQUEST_CODE
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.copyFileToAppDir
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.getContent
 import kotlinx.android.synthetic.main.compose_fragment.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class ComposeFragment : Fragment() {
 
@@ -23,6 +30,7 @@ class ComposeFragment : Fragment() {
         fun newInstance() = ComposeFragment()
     }
 
+    private val ioScope = CoroutineScope(Dispatchers.IO)
     private lateinit var viewModel: ComposeViewModel
     private lateinit var messageViewModel: MessageViewModel
 
@@ -44,7 +52,7 @@ class ComposeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.fab_compose_send.setOnClickListener {
             if (viewModel.messageIsValid()) {
-                viewModel.saveMessage(this, messageViewModel)
+                saveMessage()
                 activity!!.finish()
             } else {
                 Toast.makeText(context, R.string.empty_message, Toast.LENGTH_LONG).show()
@@ -53,11 +61,6 @@ class ComposeFragment : Fragment() {
         view.imageButton.setOnClickListener {
             getContent(this, "image/*")
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -69,4 +72,23 @@ class ComposeFragment : Fragment() {
         }
     }
 
+    private fun saveMessage() {
+        val fragment = this
+        ioScope.launch {
+            val message = if (viewModel.imageUri.value != null) {
+                val newUri = ioScope.async {
+                    copyFileToAppDir(fragment, viewModel.imageUri.value!!).toUri()
+                }
+                Message(
+                    null, viewModel.sender.value!!, viewModel.receiver.value!!,
+                    viewModel.message.value!!, newUri.await().toString()
+                )
+            } else {
+                Message(
+                    null, viewModel.sender.value!!, viewModel.receiver.value!!, viewModel.message.value!!
+                )
+            }
+            messageViewModel.insert(message)
+        }
+    }
 }

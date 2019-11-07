@@ -28,7 +28,6 @@ class MessageListAdapter internal constructor(private val itemClickListener: OnI
             receiverView.text = message.receiver
             messageView.text = message.message
             if (message.imageUri != null) {
-                Log.d("adapter", message.imageUri)
                 imageCard.setImageURI(Uri.parse(message.imageUri))
             }
             itemView.setOnClickListener {
