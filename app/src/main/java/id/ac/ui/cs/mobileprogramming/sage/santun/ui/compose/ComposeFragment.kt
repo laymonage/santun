@@ -1,5 +1,7 @@
 package id.ac.ui.cs.mobileprogramming.sage.santun.ui.compose
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.ComposeFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.GET_REQUEST_CODE
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.getContent
 import kotlinx.android.synthetic.main.compose_fragment.view.*
 
 class ComposeFragment : Fragment() {
@@ -40,17 +44,29 @@ class ComposeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.fab_compose_send.setOnClickListener {
             if (viewModel.messageIsValid()) {
-                messageViewModel.insert(viewModel.getMessage())
+                viewModel.saveMessage(this, messageViewModel)
                 activity!!.finish()
             } else {
                 Toast.makeText(context, R.string.empty_message, Toast.LENGTH_LONG).show()
             }
+        }
+        view.imageButton.setOnClickListener {
+            getContent(this, "image/*")
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         // TODO: Use the ViewModel
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GET_REQUEST_CODE && data != null) {
+                viewModel.imageUri.value = data.data
+            }
+        }
     }
 
 }

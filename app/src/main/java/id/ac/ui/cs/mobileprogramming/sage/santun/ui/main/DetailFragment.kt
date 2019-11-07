@@ -2,6 +2,7 @@ package id.ac.ui.cs.mobileprogramming.sage.santun.ui.main
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -40,6 +41,10 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.fab_detail_save.setOnClickListener {
             viewModel.onMessageSave(this)
+        }
+        val item = viewModel.message.value!!
+        if (item.imageUri != null) {
+            view.imageDetail.setImageURI(Uri.parse(item.imageUri))
         }
     }
 
