@@ -46,7 +46,10 @@ suspend fun writeStringToFile(activity: Activity, content: String, fileName: Str
 }
 
 suspend fun copyFileToAppDir(fragment: Fragment, uriSrc: Uri): File {
-    val file = File(fragment.activity!!.applicationContext.filesDir, UUID.randomUUID().toString())
+    val file = File(
+        fragment.activity!!.applicationContext.getExternalFilesDir(null),
+        UUID.randomUUID().toString()
+    )
     withContext(Dispatchers.IO) {
         fragment.activity!!.contentResolver.openInputStream(uriSrc).use {
             input -> file.outputStream().use {
