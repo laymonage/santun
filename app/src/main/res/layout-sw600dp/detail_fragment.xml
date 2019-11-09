@@ -10,14 +10,26 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detail_fragment_tablet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.DetailFragment">
 
+        <TextView
+            android:id="@+id/no_message_selected"
+            goneUnless="@{viewModel.message == null}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_message_selected"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ScrollView
             android:id="@+id/detailView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -25,6 +37,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                goneUnless="@{viewModel.message != null}"
                 tools:context=".ui.main.DetailFragment">
 
                 <ImageView
@@ -148,7 +161,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailView"
-            app:layout_constraintVertical_bias="1" />
+            app:layout_constraintVertical_bias="1"
+            goneUnless="@{viewModel.message != null}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

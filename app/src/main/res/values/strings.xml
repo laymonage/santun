@@ -15,4 +15,6 @@
     <string name="receiver_label_card">To:</string>
     <string name="message_label_card">Message:</string>
     <string name="no_connection_message">Internet connection lost. Message list won\'t be updated.</string>
+    <string name="no_messages">No messages yet.</string>
+    <string name="no_message_selected">Select a message to see the details.</string>
 </resources>

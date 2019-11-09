@@ -40,6 +40,7 @@ class DetailFragment : Fragment() {
         )
         viewModel = ViewModelProvider(activity!!).get(MainViewModel::class.java)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 

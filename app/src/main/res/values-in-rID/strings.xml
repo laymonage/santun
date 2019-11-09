@@ -16,4 +16,6 @@
     <string name="sender_label">DARI</string>
     <string name="sender_label_card">Dari:</string>
     <string name="no_connection_message">Koneksi internet terputus. Daftar pesan tidak akan diperbarui.</string>
+    <string name="no_messages">Belum ada pesan.</string>
+    <string name="no_message_selected">Pilih sebuah pesan untuk melihat detailnya.</string>
 </resources>

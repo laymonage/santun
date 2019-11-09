@@ -8,7 +8,9 @@ import org.joda.time.format.DateTimeFormat
 class MainViewModel : ViewModel() {
     val message = MutableLiveData<Message>()
 
-    fun getFormattedTimestamp(): String {
-        return DateTimeFormat.mediumDateTime().print(message.value!!.timestamp)
+    fun getFormattedTimestamp(): String? {
+        return message.value?.let {
+            DateTimeFormat.mediumDateTime().print(it.timestamp)
+        }
     }
 }

@@ -25,11 +25,14 @@ class MainFragment : Fragment() {
 
     private val onItemClickListener = object : OnItemClickListener {
         override fun onItemClicked(message: Message) {
+            val isTablet = resources.getBoolean(R.bool.is_tablet)
             viewModel.message.value = message
-            activity!!.supportFragmentManager.beginTransaction()
-                .replace(R.id.container, DetailFragment.newInstance())
-                .addToBackStack(null)
-                .commit()
+            if (!isTablet) {
+                activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, DetailFragment.newInstance())
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 
@@ -44,9 +47,10 @@ class MainFragment : Fragment() {
             inflater, R.layout.main_fragment, container, false
         )
         viewModel = ViewModelProvider(activity!!).get(MainViewModel::class.java)
-        messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
+        messageViewModel = ViewModelProvider(activity!!).get(MessageViewModel::class.java)
         binding.viewModel = viewModel
         binding.composeViewModel = messageViewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -65,7 +69,7 @@ class MainFragment : Fragment() {
         )
 
         view.fab_main_compose.setOnClickListener {
-            val intent = Intent(this.context, ComposeActivity::class.java)
+            val intent = Intent(context, ComposeActivity::class.java)
             startActivity(intent)
         }
     }
