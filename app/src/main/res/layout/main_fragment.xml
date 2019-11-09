@@ -43,7 +43,7 @@
             android:id="@+id/fab_main_compose"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_add_24dp"
+            android:src="@drawable/ic_add"
             android:tint="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
