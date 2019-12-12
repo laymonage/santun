@@ -8,14 +8,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.model.Message
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
-class MessageListAdapter internal constructor(private val itemClickListener: OnItemClickListener) :
-    RecyclerView.Adapter<MessageListAdapter.MessageViewHolder>() {
-
-    private var messages = emptyList<Message>()
+class MessageListAdapter internal constructor(
+    private val itemClickListener: OnItemClickListener,
+    options: FirebaseRecyclerOptions<Message>
+) :
+    FirebaseRecyclerAdapter<Message, MessageListAdapter.MessageViewHolder>(options) {
 
     inner class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val senderView: TextView = itemView.senderText
@@ -27,7 +30,7 @@ class MessageListAdapter internal constructor(private val itemClickListener: OnI
             senderView.text = message.sender
             receiverView.text = message.receiver
             messageView.text = message.message
-            if (message.imageUri != null) {
+            if (!message.imageUri.isNullOrBlank()) {
                 imageCard.setImageURI(Uri.parse(message.imageUri))
             }
             itemView.setOnClickListener {
@@ -42,18 +45,8 @@ class MessageListAdapter internal constructor(private val itemClickListener: OnI
         return MessageViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        val current = messages[position]
-        holder.bind(current, itemClickListener)
-    }
-
-    internal fun setMessages(messages: List<Message>) {
-        this.messages = messages
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount(): Int {
-        return messages.size
+    override fun onBindViewHolder(holder: MessageViewHolder, position: Int, message: Message) {
+        holder.bind(message, itemClickListener)
     }
 }
 

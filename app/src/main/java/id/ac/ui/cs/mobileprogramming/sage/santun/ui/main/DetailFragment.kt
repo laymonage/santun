@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.DetailFragmentBinding
-import id.ac.ui.cs.mobileprogramming.sage.santun.util.data.toJson
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.*
 import kotlinx.android.synthetic.main.detail_fragment.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -65,22 +64,19 @@ class DetailFragment : Fragment() {
 
     private fun onMessageSave() {
         val message = viewModel.message.value!!
-        val fileName = "${message.id.toString()}.json"
+        val fileName = "${message.timestamp}.json"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             createDocument(
                 this, "application/json", fileName
             )
         } else {
             ioScope.launch {
-                writeStringToFile(activity!!,toJson(message), fileName)
             }
         }
     }
 
     private fun onMessageFileUriReceived(data: Intent) {
         ioScope.launch {
-            writeStringToFile(activity!!,
-                toJson(viewModel.message.value!!), data.data!!)
         }
     }
 

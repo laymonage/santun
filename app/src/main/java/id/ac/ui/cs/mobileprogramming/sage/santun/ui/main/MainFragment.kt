@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.MainFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.ComposeActivity
 import id.ac.ui.cs.mobileprogramming.sage.santun.model.Message
-import id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel
+import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MainFragment : Fragment() {
@@ -22,6 +22,9 @@ class MainFragment : Fragment() {
     companion object {
         fun newInstance() = MainFragment()
     }
+
+    private lateinit var viewModel: MainViewModel
+    private lateinit var adapter: MessageListAdapter
 
     private val onItemClickListener = object : OnItemClickListener {
         override fun onItemClicked(message: Message) {
@@ -36,9 +39,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModel: MainViewModel
-    private lateinit var messageViewModel: MessageViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,10 +47,13 @@ class MainFragment : Fragment() {
             inflater, R.layout.main_fragment, container, false
         )
         viewModel = ViewModelProvider(activity!!).get(MainViewModel::class.java)
-        messageViewModel = ViewModelProvider(activity!!).get(MessageViewModel::class.java)
         binding.viewModel = viewModel
-        binding.composeViewModel = messageViewModel
         binding.lifecycleOwner = this
+        val options = FirebaseRecyclerOptions.Builder<Message>()
+            .setQuery(viewModel.query, Message::class.java)
+            .setLifecycleOwner(activity)
+            .build()
+        adapter = MessageListAdapter(onItemClickListener, options)
         return binding.root
     }
 
@@ -58,15 +61,11 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.recyclerview
-        val adapter = MessageListAdapter(onItemClickListener)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context!!)
-
-        messageViewModel.allMessages.observe(
-            viewLifecycleOwner, Observer {
-                    messages -> messages?.let { adapter.setMessages(it) }
-            }
-        )
+        val layoutManager = LinearLayoutManager(context!!)
+        layoutManager.stackFromEnd = true
+        layoutManager.reverseLayout = true
+        recyclerView.layoutManager = layoutManager
 
         view.fab_main_compose.setOnClickListener {
             val intent = Intent(context, ComposeActivity::class.java)

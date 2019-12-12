@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.ComposeFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.model.Message
-import id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.GET_REQUEST_CODE
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.copyFileToAppDir
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.getContent
@@ -32,7 +31,6 @@ class ComposeFragment : Fragment() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
     private lateinit var viewModel: ComposeViewModel
-    private lateinit var messageViewModel: MessageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,9 +40,7 @@ class ComposeFragment : Fragment() {
             inflater, R.layout.compose_fragment, container, false
         )
         viewModel = ViewModelProvider(this).get(ComposeViewModel::class.java)
-        messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         binding.viewModel = viewModel
-        binding.messageViewModel = messageViewModel
         return binding.root
     }
 
@@ -80,15 +76,15 @@ class ComposeFragment : Fragment() {
                     copyFileToAppDir(fragment, viewModel.imageUri.value!!).toUri()
                 }
                 Message(
-                    null, viewModel.sender.value!!, viewModel.receiver.value!!,
+                    viewModel.sender.value!!, viewModel.receiver.value!!,
                     viewModel.message.value!!, newUri.await().toString()
                 )
             } else {
                 Message(
-                    null, viewModel.sender.value!!, viewModel.receiver.value!!, viewModel.message.value!!
+                    viewModel.sender.value!!, viewModel.receiver.value!!, viewModel.message.value!!
                 )
             }
-            messageViewModel.insert(message)
+            viewModel.save(message)
         }
     }
 }

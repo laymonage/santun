@@ -2,18 +2,12 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "d1a8765ded50b6acce7d656dcf0b6e50",
+    "identityHash": "645f6b38a66b136e34295683553333b2",
     "entities": [
       {
-        "tableName": "message_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `sender` TEXT NOT NULL, `receiver` TEXT NOT NULL, `message` TEXT NOT NULL, `image_uri` TEXT, `timestamp` INTEGER NOT NULL)",
+        "tableName": "Message",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sender` TEXT NOT NULL, `receiver` TEXT NOT NULL, `message` TEXT NOT NULL, `imageUri` TEXT, `timestamp` INTEGER NOT NULL)",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
           {
             "fieldPath": "sender",
             "columnName": "sender",
@@ -34,7 +28,7 @@
           },
           {
             "fieldPath": "imageUri",
-            "columnName": "image_uri",
+            "columnName": "imageUri",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -46,10 +40,8 @@
           }
         ],
         "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": true
+          "columnNames": [],
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -58,7 +50,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd1a8765ded50b6acce7d656dcf0b6e50')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '645f6b38a66b136e34295683553333b2')"
     ]
   }
 }

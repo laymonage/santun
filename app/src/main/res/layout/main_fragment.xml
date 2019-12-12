@@ -7,9 +7,6 @@
         <variable
             name="viewModel"
             type="id.ac.ui.cs.mobileprogramming.sage.santun.ui.main.MainViewModel"/>
-        <variable
-            name="composeViewModel"
-            type="id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,8 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            goneUnless="@{composeViewModel.allMessages.isEmpty()}" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"

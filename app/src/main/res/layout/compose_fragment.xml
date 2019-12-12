@@ -7,9 +7,6 @@
         <variable
             name="viewModel"
             type="id.ac.ui.cs.mobileprogramming.sage.santun.ui.compose.ComposeViewModel" />
-        <variable
-            name="messageViewModel"
-            type="id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
