@@ -38,10 +38,23 @@ suspend fun writeStringToFile(activity: Activity, content: String, uri: Uri) {
     }
 }
 
+suspend fun writeByteArrayToFile(activity: Activity, content: ByteArray, uri: Uri) {
+    withContext(Dispatchers.IO) {
+        activity.contentResolver.openOutputStream(uri)!!.write(content)
+    }
+}
+
 suspend fun writeStringToFile(activity: Activity, content: String, fileName: String) {
     withContext(Dispatchers.IO) {
         val file = File(activity.applicationContext.filesDir, fileName)
         file.bufferedWriter().use { it.write(content) }
+    }
+}
+
+suspend fun writeByteArrayToFile(activity: Activity, content: ByteArray, fileName: String) {
+    withContext(Dispatchers.IO) {
+        val file = File(activity.applicationContext.filesDir, fileName)
+        file.writeBytes(content)
     }
 }
 

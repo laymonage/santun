@@ -55,6 +55,9 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.6'
 
+    // Snappy JNI library
+    implementation 'com.jiechic.android.library:snappy-android:1.1.7'
+
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
     kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"

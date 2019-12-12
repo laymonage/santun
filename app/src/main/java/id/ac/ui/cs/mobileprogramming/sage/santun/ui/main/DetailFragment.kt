@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.DetailFragmentBinding
-import id.ac.ui.cs.mobileprogramming.sage.santun.util.data.toJson
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.*
 import kotlinx.android.synthetic.main.detail_fragment.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -72,15 +71,14 @@ class DetailFragment : Fragment() {
             )
         } else {
             ioScope.launch {
-                writeStringToFile(activity!!,toJson(message), fileName)
+                writeByteArrayToFile(activity!!, viewModel.getCompressedJsonMessage(), fileName)
             }
         }
     }
 
     private fun onMessageFileUriReceived(data: Intent) {
         ioScope.launch {
-            writeStringToFile(activity!!,
-                toJson(viewModel.message.value!!), data.data!!)
+            writeByteArrayToFile(activity!!, viewModel.getCompressedJsonMessage(), data.data!!)
         }
     }
 
