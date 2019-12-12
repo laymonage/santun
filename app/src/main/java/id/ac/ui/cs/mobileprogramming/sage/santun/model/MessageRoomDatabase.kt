@@ -9,7 +9,7 @@ import id.ac.ui.cs.mobileprogramming.sage.santun.model.migrations.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Message::class], version = 4)
+@Database(entities = [Message::class], version = 1)
 abstract class MessageRoomDatabase : RoomDatabase() {
 
     abstract fun messageDao(): MessageDao
@@ -57,9 +57,7 @@ abstract class MessageRoomDatabase : RoomDatabase() {
                     "message_database"
                 )
                     .addCallback(MessageDatabaseCallback(scope))
-                    .addMigrations(MESSAGE_MIGRATION_1_2)
-                    .addMigrations(MESSAGE_MIGRATION_2_3)
-                    .addMigrations(MESSAGE_MIGRATION_3_4)
+                    .fallbackToDestructiveMigrationOnDowngrade()
                     .build()
                 INSTANCE = instance
                 return instance
