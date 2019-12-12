@@ -14,3 +14,10 @@ val MESSAGE_MIGRATION_2_3: Migration = object : Migration(2, 3) {
         database.execSQL("ALTER TABLE message_table ADD COLUMN timestamp INTEGER NOT NULL")
     }
 }
+
+val MESSAGE_MIGRATION_3_4: Migration = object : Migration(3, 4) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE message_table ADD COLUMN uuid TEXT NOT NULL")
+        database.execSQL("CREATE UNIQUE INDEX idx_message_uuid ON message_table(uuid)")
+    }
+}
