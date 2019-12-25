@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.sage.santun.model
+package id.ac.ui.cs.mobileprogramming.sage.santun.data.model
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

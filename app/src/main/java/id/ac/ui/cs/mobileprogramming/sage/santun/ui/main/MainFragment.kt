@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.MainFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.ComposeActivity
-import id.ac.ui.cs.mobileprogramming.sage.santun.model.Message
-import id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel
+import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.Message
+import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MainFragment : Fragment() {

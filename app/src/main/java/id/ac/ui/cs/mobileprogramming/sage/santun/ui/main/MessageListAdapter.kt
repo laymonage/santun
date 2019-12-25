@@ -1,7 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.sage.santun.ui.main
 
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
-import id.ac.ui.cs.mobileprogramming.sage.santun.model.Message
+import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.Message
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
 class MessageListAdapter internal constructor(private val itemClickListener: OnItemClickListener) :

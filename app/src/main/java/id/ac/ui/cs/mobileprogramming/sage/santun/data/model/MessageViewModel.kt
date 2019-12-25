@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.sage.santun.model
+package id.ac.ui.cs.mobileprogramming.sage.santun.data.model
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

@@ -8,6 +8,10 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "id.ac.ui.cs.mobileprogramming.sage.santun"
@@ -52,8 +56,12 @@ dependencies {
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.7.0'
+
     // Gson
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
 
     // Snappy JNI library
     implementation 'com.jiechic.android.library:snappy-android:1.1.7'

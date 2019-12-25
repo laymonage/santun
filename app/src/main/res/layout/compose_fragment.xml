@@ -9,7 +9,7 @@
             type="id.ac.ui.cs.mobileprogramming.sage.santun.ui.compose.ComposeViewModel" />
         <variable
             name="messageViewModel"
-            type="id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel" />
+            type="id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

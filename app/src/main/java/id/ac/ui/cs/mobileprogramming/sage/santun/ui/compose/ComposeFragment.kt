@@ -13,16 +13,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.ComposeFragmentBinding
-import id.ac.ui.cs.mobileprogramming.sage.santun.model.Message
-import id.ac.ui.cs.mobileprogramming.sage.santun.model.MessageViewModel
+import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.Message
+import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel
+import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.APIWise
+import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.MessageBody
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.GET_REQUEST_CODE
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.copyFileToAppDir
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.getContent
 import kotlinx.android.synthetic.main.compose_fragment.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class ComposeFragment : Fragment() {
 
@@ -31,6 +30,7 @@ class ComposeFragment : Fragment() {
     }
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
+    private val service = APIWise.getAPIService()
     private lateinit var viewModel: ComposeViewModel
     private lateinit var messageViewModel: MessageViewModel
 
@@ -52,7 +52,7 @@ class ComposeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.fab_compose_send.setOnClickListener {
             if (viewModel.messageIsValid()) {
-                saveMessage()
+                sendMessage()
                 activity!!.finish()
             } else {
                 Toast.makeText(context, R.string.empty_message, Toast.LENGTH_LONG).show()
@@ -72,7 +72,7 @@ class ComposeFragment : Fragment() {
         }
     }
 
-    private fun saveMessage() {
+    private fun sendMessage() {
         val fragment = this
         ioScope.launch {
             val message = if (viewModel.imageUri.value != null) {
@@ -88,6 +88,7 @@ class ComposeFragment : Fragment() {
                     null, viewModel.sender.value!!, viewModel.receiver.value!!, viewModel.message.value!!
                 )
             }
+            service.createMessage(MessageBody(message))
             messageViewModel.insert(message)
         }
     }
