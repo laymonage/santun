@@ -4,7 +4,8 @@
     <string name="compose_button">Tulis Pesan</string>
     <string name="detail_button">Detail</string>
     <string name="empty_message">Mohon isi semua kolom.</string>
-    <string name="image_button">Sisipkan</string>
+    <string name="image_button">Pilih dari galeri</string>
+    <string name="camera_button">Ambil foto baru</string>
     <string name="image_label">GAMBAR</string>
     <string name="message_hint">Tuliskan pesan Anda di sini…</string>
     <string name="message_label">PESAN</string>

@@ -8,7 +8,8 @@
     <string name="message_label">MESSAGE</string>
     <string name="message_hint">Write your message here…</string>
     <string name="image_label">IMAGE</string>
-    <string name="image_button">Insert</string>
+    <string name="image_button">Pick from gallery</string>
+    <string name="camera_button">Take a photo</string>
     <string name="compose_button">Compose</string>
     <string name="empty_message">Please fill all the fields.</string>
     <string name="sender_label_card">From:</string>

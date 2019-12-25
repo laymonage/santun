@@ -2,11 +2,15 @@ package id.ac.ui.cs.mobileprogramming.sage.santun.ui.compose
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,11 +21,11 @@ import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.Message
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.APIWise
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.MessageBody
-import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.GET_REQUEST_CODE
-import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.copyFileToAppDir
-import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.getContent
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.*
 import kotlinx.android.synthetic.main.compose_fragment.view.*
 import kotlinx.coroutines.*
+import java.io.IOException
+import java.util.*
 
 class ComposeFragment : Fragment() {
 
@@ -33,6 +37,8 @@ class ComposeFragment : Fragment() {
     private val service = APIWise.getAPIService()
     private lateinit var viewModel: ComposeViewModel
     private lateinit var messageViewModel: MessageViewModel
+    private var currentPhotoUri: Uri? = null
+    private val uuid: UUID = UUID.randomUUID()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +67,9 @@ class ComposeFragment : Fragment() {
         view.imageButton.setOnClickListener {
             getContent(this, "image/*")
         }
+        view.cameraButton.setOnClickListener {
+            onCameraButtonClicked()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -68,6 +77,9 @@ class ComposeFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == GET_REQUEST_CODE && data != null) {
                 viewModel.imageUri.value = data.data
+            } else if (requestCode == TAKE_PHOTO_REQUEST_CODE && currentPhotoUri != null) {
+                viewModel.imageUri.value = currentPhotoUri
+                currentPhotoUri = null
             }
         }
     }
@@ -77,19 +89,37 @@ class ComposeFragment : Fragment() {
         ioScope.launch {
             val message = if (viewModel.imageUri.value != null) {
                 val newUri = ioScope.async {
-                    copyFileToAppDir(fragment, viewModel.imageUri.value!!).toUri()
+                    copyFileToAppDir(fragment, viewModel.imageUri.value!!, uuid.toString()).toUri()
                 }
                 Message(
                     null, viewModel.sender.value!!, viewModel.receiver.value!!,
-                    viewModel.message.value!!, newUri.await().toString()
+                    viewModel.message.value!!, newUri.await().toString(), uuid = uuid.toString()
                 )
             } else {
                 Message(
-                    null, viewModel.sender.value!!, viewModel.receiver.value!!, viewModel.message.value!!
+                    null, viewModel.sender.value!!, viewModel.receiver.value!!, viewModel.message.value!!,
+                    uuid = uuid.toString()
                 )
             }
             service.createMessage(MessageBody(message))
             messageViewModel.insert(message)
+        }
+    }
+
+    fun onCameraButtonClicked() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { imageCaptureIntent ->
+            imageCaptureIntent.resolveActivity(activity!!.packageManager)?.also {
+                val photoFile = try {
+                    createImageFile(activity!!, uuid.toString())
+                } catch (ex: IOException) {
+                    null
+                }
+                photoFile?.also {
+                    currentPhotoUri = FileProvider.getUriForFile(activity!!, "id.ac.ui.cs.mobileprogramming.sage.santun", it)
+                    imageCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
+                    startActivityForResult(imageCaptureIntent, TAKE_PHOTO_REQUEST_CODE)
+                }
+            }
         }
     }
 }

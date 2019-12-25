@@ -4,15 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.util.*
+import java.io.IOException
 
 const val CREATE_REQUEST_CODE = 42
 const val GET_REQUEST_CODE = 43
+const val TAKE_PHOTO_REQUEST_CODE = 44
 
 @RequiresApi(Build.VERSION_CODES.KITKAT)
 fun createDocument(fragment: Fragment, mimeType: String, fileName: String) {
@@ -22,6 +24,12 @@ fun createDocument(fragment: Fragment, mimeType: String, fileName: String) {
         putExtra(Intent.EXTRA_TITLE, fileName)
     }
     fragment.startActivityForResult(intent, CREATE_REQUEST_CODE)
+}
+
+@Throws(IOException::class)
+fun createImageFile(activity: Activity, destName: String): File {
+    val storageDir: File = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+    return File.createTempFile(destName, ".jpg", storageDir)
 }
 
 fun getContent(fragment: Fragment, mimeType: String) {
@@ -58,10 +66,9 @@ suspend fun writeByteArrayToFile(activity: Activity, content: ByteArray, fileNam
     }
 }
 
-suspend fun copyFileToAppDir(fragment: Fragment, uriSrc: Uri): File {
+suspend fun copyFileToAppDir(fragment: Fragment, uriSrc: Uri, destName: String): File {
     val file = File(
-        fragment.activity!!.applicationContext.getExternalFilesDir(null),
-        UUID.randomUUID().toString()
+        fragment.activity!!.applicationContext.getExternalFilesDir(null), destName
     )
     withContext(Dispatchers.IO) {
         fragment.activity!!.contentResolver.openInputStream(uriSrc).use {
