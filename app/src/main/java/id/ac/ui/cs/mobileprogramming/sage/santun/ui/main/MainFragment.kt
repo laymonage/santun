@@ -97,6 +97,13 @@ class MainFragment : Fragment() {
             onBackup()
             true
         }
+        R.id.action_about -> {
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.container, AboutFragment.newInstance())
+                .addToBackStack(null)
+                .commit()
+            true
+        }
         else -> {
             false
         }

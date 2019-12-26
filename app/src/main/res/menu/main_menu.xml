@@ -5,5 +5,8 @@
         android:id="@+id/action_backup_all"
         android:icon="@drawable/ic_backup"
         android:title="@string/backup_menu_title"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_about"
+        android:title="@string/about_menu_title" />
 </menu>

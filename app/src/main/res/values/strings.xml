@@ -22,5 +22,11 @@
     <string name="message_send_failed">Failed to send message, retrying later.</string>
     <string name="camera_permission_rationale">To use this feature, you must allow this application to access your camera.</string>
     <string name="backup_menu_title">Backup all messages</string>
+    <string name="about_menu_title">About</string>
     <string name="connect_internet_hint">Connect to the internet to create messages.</string>
+    <string name="about_version">Version 2.0.0</string>
+    <string name="about_developer">Written by laymonage</string>
+    <string name="about_license">Released under the MIT License</string>
+    <string name="about_year">2019</string>
+    <string name="stylized_name">"s\na\nn\nt\nu\nn"</string>
 </resources>
