@@ -2,6 +2,7 @@ package id.ac.ui.cs.mobileprogramming.sage.santun.ui.compose
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,6 +22,8 @@ import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.APIWise
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.MessageBody
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.ComposeFragmentBinding
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.permissions.Camera
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.permissions.Permission
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.*
 import kotlinx.android.synthetic.main.compose_fragment.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -30,10 +33,6 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -50,6 +49,7 @@ class ComposeFragment : Fragment() {
     private lateinit var messageViewModel: MessageViewModel
     private var currentPhotoUri: Uri? = null
     private val uuid: UUID = UUID.randomUUID()
+    private val cameraPermission: Permission = Camera()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -139,6 +139,10 @@ class ComposeFragment : Fragment() {
     }
 
     private fun onCameraButtonClicked() {
+        if (!cameraPermission.verifyPermission(activity!!)) {
+            cameraPermission.requestPermission(this)
+            return
+        }
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { imageCaptureIntent ->
             imageCaptureIntent.resolveActivity(activity!!.packageManager)?.also {
                 val photoFile = try {
@@ -150,6 +154,25 @@ class ComposeFragment : Fragment() {
                     currentPhotoUri = FileProvider.getUriForFile(activity!!, "id.ac.ui.cs.mobileprogramming.sage.santun", it)
                     imageCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
                     startActivityForResult(imageCaptureIntent, TAKE_PHOTO_REQUEST_CODE)
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            Camera.REQUEST_CAMERA -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    onCameraButtonClicked()
+                } else {
+                    activity!!.supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, PermissionRationaleFragment.newInstance(R.string.camera_permission_rationale))
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
         }

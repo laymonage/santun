@@ -21,4 +21,5 @@
     <string name="no_message_selected">Pilih sebuah pesan untuk melihat detailnya.</string>
     <string name="message_send_success">Pesan berhasil dikirim!</string>
     <string name="message_send_failed">Gagal mengirim pesan, akan dikirim lagi nanti.</string>
+    <string name="camera_permission_rationale">Untuk menggunakan fitur ini, Anda harus mengizinkan aplikasi ini untuk mengakses kamera.</string>
 </resources>
