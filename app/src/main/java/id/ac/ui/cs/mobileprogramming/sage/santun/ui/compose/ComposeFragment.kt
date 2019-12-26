@@ -16,14 +16,25 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
-import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.ComposeFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.Message
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.APIWise
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.MessageBody
+import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.ComposeFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.*
 import kotlinx.android.synthetic.main.compose_fragment.view.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
 import java.io.IOException
 import java.util.*
 
@@ -87,26 +98,47 @@ class ComposeFragment : Fragment() {
     private fun sendMessage() {
         val fragment = this
         ioScope.launch {
-            val message = if (viewModel.imageUri.value != null) {
-                val newUri = ioScope.async {
-                    copyFileToAppDir(fragment, viewModel.imageUri.value!!, uuid.toString()).toUri()
+            withContext(ioScope.coroutineContext) {
+                val message: Message
+                if (viewModel.imageUri.value != null) {
+                    val newUri = copyFileToAppDir(fragment, viewModel.imageUri.value!!, uuid.toString()).toUri()
+                    message = Message(
+                        null, viewModel.sender.value!!, viewModel.receiver.value!!,
+                        viewModel.message.value!!, newUri.toString(), uuid = uuid.toString()
+                    )
+                    val file = File(newUri.path!!)
+                    val requestFile = RequestBody.create(MediaType.parse(activity!!.contentResolver.getType(viewModel.imageUri.value!!)!!), file)
+                    val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+                    val uuidBody = RequestBody.create(MultipartBody.FORM, uuid.toString())
+                    val call = service.upload(uuidBody, body)
+                    if (call.isSuccessful) {
+                        Log.d("upload success", call.message())
+                    } else {
+                        Log.d("upload failed", call.message())
+                    }
+
+                } else {
+                    message = Message(
+                        null, viewModel.sender.value!!, viewModel.receiver.value!!, viewModel.message.value!!,
+                        uuid = uuid.toString()
+                    )
                 }
-                Message(
-                    null, viewModel.sender.value!!, viewModel.receiver.value!!,
-                    viewModel.message.value!!, newUri.await().toString(), uuid = uuid.toString()
-                )
-            } else {
-                Message(
-                    null, viewModel.sender.value!!, viewModel.receiver.value!!, viewModel.message.value!!,
-                    uuid = uuid.toString()
-                )
+                val call = service.createMessage(MessageBody(message))
+                if (call.isSuccessful) {
+                    activity!!.runOnUiThread {
+                        Toast.makeText(context, R.string.message_send_success, Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    activity!!.runOnUiThread {
+                        Toast.makeText(context, R.string.message_send_failed, Toast.LENGTH_LONG).show()
+                    }
+                }
+                messageViewModel.insert(message)
             }
-            service.createMessage(MessageBody(message))
-            messageViewModel.insert(message)
         }
     }
 
-    fun onCameraButtonClicked() {
+    private fun onCameraButtonClicked() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { imageCaptureIntent ->
             imageCaptureIntent.resolveActivity(activity!!.packageManager)?.also {
                 val photoFile = try {

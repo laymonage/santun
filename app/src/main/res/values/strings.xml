@@ -18,4 +18,6 @@
     <string name="no_connection_message">Internet connection lost. Message list won\'t be updated.</string>
     <string name="no_messages">No messages yet.</string>
     <string name="no_message_selected">Select a message to see the details.</string>
+    <string name="message_send_success">Message has been sent successfully!</string>
+    <string name="message_send_failed">Failed to send message, retrying later.</string>
 </resources>
