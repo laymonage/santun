@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -16,6 +17,7 @@ import id.ac.ui.cs.mobileprogramming.sage.santun.ComposeActivity
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.Message
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageList
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.broadcast.ConnectionIdentifier
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.CREATE_REQUEST_CODE
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.createDocument
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.writeByteArrayToFile
@@ -81,8 +83,12 @@ class MainFragment : Fragment() {
         )
 
         view.fab_main_compose.setOnClickListener {
-            val intent = Intent(context, ComposeActivity::class.java)
-            startActivity(intent)
+            if (ConnectionIdentifier.getConnectionType(context) == ConnectionIdentifier.CONNECTION_NONE) {
+                Toast.makeText(context, R.string.connect_internet_hint, Toast.LENGTH_LONG).show()
+            } else {
+                val intent = Intent(context, ComposeActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
