@@ -31,4 +31,8 @@
     <string name="about_year">2019</string>
     <string name="stylized_name">"s\na\nn\nt\nu\nn"</string>
     <string name="sync_menu_title">Sinkronkan</string>
+    <string name="sync_notification_channel_name">Sinkronisasi</string>
+    <string name="sync_notification_channel_description">Sinkronisasi dengan peladen</string>
+    <string name="sync_notification_title">Sinkronisasi selesai</string>
+    <string name="sync_notification_text">Daftar pesan telah dimutakhirkan.</string>
 </resources>

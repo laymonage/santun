@@ -30,4 +30,8 @@
     <string name="about_year">2019</string>
     <string name="stylized_name">"s\na\nn\nt\nu\nn"</string>
     <string name="sync_menu_title">Sync</string>
+    <string name="sync_notification_channel_name">Synchronization</string>
+    <string name="sync_notification_channel_description">Synchronization with server</string>
+    <string name="sync_notification_title">Sync completed</string>
+    <string name="sync_notification_text">Message list is up to date.</string>
 </resources>
