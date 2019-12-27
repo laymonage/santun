@@ -25,8 +25,12 @@ class SyncWorker(applicationContext: Context, workerParams: WorkerParameters) :
     private val service = APIWise.getAPIService()
 
     override suspend fun doWork(): Result {
-        notifySyncComplete()
-        return if (sync()) Result.success() else Result.failure()
+        return if (sync()) {
+            notifySyncComplete()
+            Result.success()
+        } else {
+            Result.failure()
+        }
     }
 
     private suspend fun sync(): Boolean {
