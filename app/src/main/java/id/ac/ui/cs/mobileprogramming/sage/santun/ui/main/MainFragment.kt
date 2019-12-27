@@ -11,12 +11,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.BackoffPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.MainFragmentBinding
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.ComposeActivity
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.Message
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageList
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel
+import id.ac.ui.cs.mobileprogramming.sage.santun.data.worker.SyncWorker
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.broadcast.ConnectionIdentifier
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.CREATE_REQUEST_CODE
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.createDocument
@@ -27,6 +32,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
+import java.util.concurrent.TimeUnit
 
 class MainFragment : Fragment() {
 
@@ -104,9 +110,21 @@ class MainFragment : Fragment() {
                 .commit()
             true
         }
+        R.id.action_sync -> {
+            onSync()
+            true
+        }
         else -> {
             false
         }
+    }
+
+    private fun onSync() {
+        val syncWorkRequest = OneTimeWorkRequestBuilder<SyncWorker>()
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR, OneTimeWorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
+            .build()
+        WorkManager.getInstance(context!!).enqueue(syncWorkRequest)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

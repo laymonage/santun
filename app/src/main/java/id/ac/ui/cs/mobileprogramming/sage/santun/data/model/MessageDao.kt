@@ -8,8 +8,11 @@ import androidx.room.Query
 @Dao
 interface MessageDao {
 
-    @Query("SELECT * FROM message_table ORDER BY id DESC")
+    @Query("SELECT * FROM message_table ORDER BY timestamp DESC")
     fun getAllMessages(): LiveData<List<Message>>
+
+    @Query("SELECT * FROM message_table ORDER BY timestamp DESC")
+    fun getAllCurrentMessages(): List<Message>
 
     @Insert
     suspend fun insert(message: Message)

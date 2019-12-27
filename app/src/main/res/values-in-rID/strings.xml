@@ -30,4 +30,5 @@
     <string name="about_license">Dirilis dengan lisensi MIT</string>
     <string name="about_year">2019</string>
     <string name="stylized_name">"s\na\nn\nt\nu\nn"</string>
+    <string name="sync_menu_title">Sinkronkan</string>
 </resources>
