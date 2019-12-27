@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.PermissionRationaleFragmentBinding
 
-class PermissionRationaleFragment(val resId: Int) : Fragment() {
+class PermissionRationaleFragment(private val resId: Int) : Fragment() {
 
     companion object {
         fun newInstance(resId: Int) = PermissionRationaleFragment(resId)

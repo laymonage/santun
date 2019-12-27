@@ -52,10 +52,10 @@ class AboutFragment : Fragment(), TextureView.SurfaceTextureListener {
         renderer.start()
     }
 
-    class RendererThread(val surface: SurfaceTexture) : Thread() {
+    class RendererThread(private val surface: SurfaceTexture) : Thread() {
 
         var isStopped = false
-        val config = intArrayOf(
+        private val config = intArrayOf(
             EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
             EGL_RED_SIZE, 8,
             EGL_GREEN_SIZE, 8,
@@ -66,7 +66,7 @@ class AboutFragment : Fragment(), TextureView.SurfaceTextureListener {
             EGL_NONE
         )
 
-        fun chooseEglConfig(egl: EGL10, eglDisplay: EGLDisplay) : EGLConfig {
+        private fun chooseEglConfig(egl: EGL10, eglDisplay: EGLDisplay) : EGLConfig {
             val configsCount = intArrayOf(0)
             val configs = arrayOfNulls<EGLConfig>(1)
             egl.eglChooseConfig(eglDisplay, config, configs, 1, configsCount)
@@ -80,7 +80,7 @@ class AboutFragment : Fragment(), TextureView.SurfaceTextureListener {
             val eglDisplay = egl.eglGetDisplay(EGL_DEFAULT_DISPLAY)
             egl.eglInitialize(eglDisplay, intArrayOf(0, 0))
             val eglConfig = chooseEglConfig(egl, eglDisplay)
-            val eglContext = egl.eglCreateContext(eglDisplay, eglConfig, EGL_NO_CONTEXT, intArrayOf(EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE));
+            val eglContext = egl.eglCreateContext(eglDisplay, eglConfig, EGL_NO_CONTEXT, intArrayOf(EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE))
             val eglSurface = egl.eglCreateWindowSurface(eglDisplay, eglConfig, surface, null)
 
             var colorVelocity = 0.01f

@@ -5,17 +5,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.Observer
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import id.ac.ui.cs.mobileprogramming.sage.santun.MainActivity
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
-import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.Message
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageRoomDatabase
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.APIWise
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.SyncRequest
 import id.ac.ui.cs.mobileprogramming.sage.santun.ui.main.MainFragment
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -24,7 +21,7 @@ class SyncWorker(applicationContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(applicationContext, workerParams) {
 
     private val messageDao = MessageRoomDatabase
-        .getDatabase(applicationContext, CoroutineScope(Dispatchers.IO)).messageDao()
+        .getDatabase(applicationContext).messageDao()
     private val service = APIWise.getAPIService()
 
     override suspend fun doWork(): Result {
