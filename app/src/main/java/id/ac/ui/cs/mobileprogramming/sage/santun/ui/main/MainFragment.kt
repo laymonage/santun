@@ -29,6 +29,7 @@ import id.ac.ui.cs.mobileprogramming.sage.santun.util.broadcast.ConnectionIdenti
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.CREATE_REQUEST_CODE
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.createDocument
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.writeByteArrayToFile
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.writeStringToFile
 import kotlinx.android.synthetic.main.main_fragment.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -144,12 +145,12 @@ class MainFragment : Fragment() {
         val fileName = "${DateTime.now().millis}.santun"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             createDocument(
-                this, "text/plain", fileName
+                this, "application/json", fileName
             )
         } else {
             ioScope.launch {
                 messageViewModel.getCompressedJsonMessageList()?.let {
-                    writeByteArrayToFile(activity!!, it, fileName)
+                    writeStringToFile(activity!!, it, fileName)
                 }
             }
         }
@@ -158,7 +159,7 @@ class MainFragment : Fragment() {
     private fun onBackupFileUriReceived(data: Intent) {
         ioScope.launch {
             messageViewModel.getCompressedJsonMessageList()?.let {
-                writeByteArrayToFile(activity!!, it, data.data!!)
+                writeStringToFile(activity!!, it, data.data!!)
             }
         }
     }

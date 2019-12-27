@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import id.ac.ui.cs.mobileprogramming.sage.santun.util.data.compress
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.data.Compression.Companion.compress
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.data.toJson
 import kotlinx.coroutines.launch
 
@@ -22,7 +22,7 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         repository.insert(message)
     }
 
-    fun getCompressedJsonMessageList(): ByteArray? {
+    fun getCompressedJsonMessageList(): String? {
         allMessages.value?.let {
             return compress(toJson(MessageList(it)))
         }

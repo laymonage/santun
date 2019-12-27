@@ -1,7 +1,11 @@
 package id.ac.ui.cs.mobileprogramming.sage.santun.util.data
 
-import com.jiechic.library.android.snappy.Snappy
+class Compression {
+    companion object {
+        init {
+            System.loadLibrary("native-lib")
+        }
 
-fun compress(input: String): ByteArray {
-    return Snappy.compress(input.toByteArray())
+        external fun compress(input: String): String
+    }
 }

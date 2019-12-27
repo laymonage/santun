@@ -1,7 +1,7 @@
 package id.ac.ui.cs.mobileprogramming.sage.santun.util.data
 
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 
 fun toJson(obj: Any): String {
-    return Gson().toJson(obj)
+    return GsonBuilder().setPrettyPrinting().create().toJson(obj)
 }

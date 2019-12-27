@@ -36,6 +36,11 @@ android {
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
     }
+    externalNativeBuild {
+        cmake {
+            path file('CMakeLists.txt')
+        }
+    }
     kapt {
         arguments {
             arg("room.schemaLocation", "$projectDir/schemas".toString())
@@ -70,9 +75,6 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
-
-    // Snappy JNI library
-    implementation 'com.jiechic.android.library:snappy-android:1.1.7'
 
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"

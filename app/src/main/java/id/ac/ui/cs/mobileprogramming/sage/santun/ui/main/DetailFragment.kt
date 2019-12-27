@@ -71,14 +71,14 @@ class DetailFragment : Fragment() {
             )
         } else {
             ioScope.launch {
-                writeByteArrayToFile(activity!!, viewModel.getCompressedJsonMessage(), fileName)
+                writeStringToFile(activity!!, viewModel.getJsonMessage(), fileName)
             }
         }
     }
 
     private fun onMessageFileUriReceived(data: Intent) {
         ioScope.launch {
-            writeByteArrayToFile(activity!!, viewModel.getCompressedJsonMessage(), data.data!!)
+            writeStringToFile(activity!!, viewModel.getJsonMessage(), data.data!!)
         }
     }
 
