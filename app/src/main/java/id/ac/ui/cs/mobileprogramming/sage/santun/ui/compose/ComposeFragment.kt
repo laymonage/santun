@@ -16,6 +16,7 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import id.ac.ui.cs.mobileprogramming.sage.santun.MainActivity
 import id.ac.ui.cs.mobileprogramming.sage.santun.R
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.Message
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel
@@ -68,18 +69,25 @@ class ComposeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.fab_compose_send.setOnClickListener {
-            if (viewModel.messageIsValid()) {
-                sendMessage()
-                activity!!.finish()
-            } else {
-                Toast.makeText(context, R.string.empty_message, Toast.LENGTH_LONG).show()
-            }
+            onSendButtonClicked()
         }
         view.imageButton.setOnClickListener {
             getContent(this, "image/*")
         }
         view.cameraButton.setOnClickListener {
             onCameraButtonClicked()
+        }
+    }
+
+    private fun onSendButtonClicked() {
+        if (viewModel.messageIsValid()) {
+            sendMessage()
+            val intent = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+            }
+            startActivity(intent)
+        } else {
+            Toast.makeText(context, R.string.empty_message, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -134,6 +142,7 @@ class ComposeFragment : Fragment() {
                     }
                 }
                 messageViewModel.insert(message)
+                activity!!.finish()
             }
         }
     }
