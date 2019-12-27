@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import id.ac.ui.cs.mobileprogramming.sage.santun.ui.main.DetailFragment
 import id.ac.ui.cs.mobileprogramming.sage.santun.ui.main.MainFragment
-import id.ac.ui.cs.mobileprogramming.sage.santun.util.broadcast.ConnectivityChangeReceiver
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.connection.ConnectivityChangeReceiver
 
 class MainActivity : AppCompatActivity() {
     private val connectivityChangeReceiver = ConnectivityChangeReceiver()

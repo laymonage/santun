@@ -23,7 +23,7 @@ import id.ac.ui.cs.mobileprogramming.sage.santun.data.model.MessageViewModel
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.APIWise
 import id.ac.ui.cs.mobileprogramming.sage.santun.data.remote.MessageBody
 import id.ac.ui.cs.mobileprogramming.sage.santun.databinding.ComposeFragmentBinding
-import id.ac.ui.cs.mobileprogramming.sage.santun.util.broadcast.ConnectionIdentifier
+import id.ac.ui.cs.mobileprogramming.sage.santun.util.connection.ConnectionIdentifier
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.permissions.Camera
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.permissions.Permission
 import id.ac.ui.cs.mobileprogramming.sage.santun.util.storage.*
@@ -82,9 +82,7 @@ class ComposeFragment : Fragment() {
 
     private fun onSendButtonClicked() {
         if (viewModel.messageIsValid()) {
-            if (ConnectionIdentifier.getConnectionType(context) == ConnectionIdentifier.CONNECTION_NONE) {
-                Toast.makeText(context, R.string.connect_internet_hint, Toast.LENGTH_LONG).show()
-            } else {
+            if (ConnectionIdentifier.ensureInternetConnection(context)) {
                 sendMessage()
                 val intent = Intent(context, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT

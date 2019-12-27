@@ -24,7 +24,7 @@
     <string name="camera_permission_rationale">Untuk menggunakan fitur ini, Anda harus mengizinkan aplikasi ini untuk mengakses kamera.</string>
     <string name="backup_menu_title">Cadangkan semua pesan</string>
     <string name="about_menu_title">Tentang</string>
-    <string name="connect_internet_hint">Aktifkan internet untuk bisa membuat pesan.</string>
+    <string name="connect_internet_hint">Anda membutuhkan koneksi internet untuk menggunakan fitur ini.</string>
     <string name="about_version">Versi 2.0.0</string>
     <string name="about_developer">Dikembangkan oleh laymonage</string>
     <string name="about_license">Dirilis dengan lisensi MIT</string>

@@ -1,9 +1,11 @@
-package id.ac.ui.cs.mobileprogramming.sage.santun.util.broadcast
+package id.ac.ui.cs.mobileprogramming.sage.santun.util.connection
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.widget.Toast
+import id.ac.ui.cs.mobileprogramming.sage.santun.R
 
 class ConnectionIdentifier {
     companion object {
@@ -35,6 +37,14 @@ class ConnectionIdentifier {
                 }
             }
             return CONNECTION_NONE
+        }
+
+        fun ensureInternetConnection(context: Context?): Boolean {
+            if (getConnectionType(context) == CONNECTION_NONE) {
+                Toast.makeText(context, R.string.connect_internet_hint, Toast.LENGTH_LONG).show()
+                return false
+            }
+            return true
         }
     }
 }

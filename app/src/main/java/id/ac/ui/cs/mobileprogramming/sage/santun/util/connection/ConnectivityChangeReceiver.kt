@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.sage.santun.util.broadcast
+package id.ac.ui.cs.mobileprogramming.sage.santun.util.connection
 
 import android.app.Activity
 import android.content.BroadcastReceiver
